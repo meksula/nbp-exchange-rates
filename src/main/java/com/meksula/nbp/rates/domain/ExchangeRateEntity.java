@@ -1,5 +1,6 @@
 package com.meksula.nbp.rates.domain;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -46,9 +47,11 @@ public class ExchangeRateEntity {
     @Column(name = "updated_date", nullable = false)
     private LocalDateTime updatedDate;
 
+    @Setter(AccessLevel.NONE)
     @Column(name = "currency_code", length = 3, nullable = false)
     private String currencyCode;
 
+    @Setter(AccessLevel.NONE)
     @Column(name = "effective_date", nullable = false)
     private LocalDate effectiveDate;
 
