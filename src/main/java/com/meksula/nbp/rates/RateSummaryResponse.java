@@ -1,7 +1,7 @@
 package com.meksula.nbp.rates;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.meksula.nbp.domain.ExchangeRate;
+import com.meksula.nbp.domain.ExchangeRateEntity;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -19,7 +19,7 @@ class RateSummaryResponse {
     private final BigDecimal bid;
     private final BigDecimal ask;
 
-    static RateSummaryResponse from(ExchangeRate entity) {
+    static RateSummaryResponse from(ExchangeRateEntity entity) {
         return RateSummaryResponse.builder()
                 .currencyCode(entity.getCurrencyCode())
                 .effectiveDate(entity.getEffectiveDate())

@@ -21,6 +21,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import static java.util.Objects.*;
+
 @Entity
 @Table(name = "exchange_rate", uniqueConstraints = @UniqueConstraint(name = "uk_exchange_rate_currency_date", columnNames = {"currency_code", "effective_date"}))
 @Getter
@@ -30,7 +32,7 @@ import java.time.LocalDateTime;
 @Builder
 @EqualsAndHashCode(of = {"currencyCode", "effectiveDate"})
 @ToString
-public class ExchangeRate {
+public class ExchangeRateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,4 +60,36 @@ public class ExchangeRate {
 
     @Column(name = "ask_rate", precision = 19, scale = 6)
     private BigDecimal ask;
+
+    public boolean isComplete() {
+        return mid != null && bid != null && ask != null;
+    }
+
+    public boolean hasNoMid() {
+        return isNull(mid);
+    }
+
+    public boolean hasNoBidAndAsk() {
+        return isNull(bid) && isNull(ask);
+    }
+
+    public void withMid(BigDecimal midRate) {
+        this.updatedDate = LocalDateTime.now();
+        this.mid = midRate;
+    }
+
+    public void withBidAndAsk(BigDecimal bid, BigDecimal ask) {
+        this.updatedDate = LocalDateTime.now();
+        this.ask = ask;
+        this.bid = bid;
+    }
+
+    public static ExchangeRateEntity.ExchangeRateEntityBuilder builder(String currencyCode, LocalDate effectiveDate) {
+        LocalDateTime now = LocalDateTime.now();
+        return new ExchangeRateEntityBuilder()
+                .createdDate(now)
+                .updatedDate(now)
+                .currencyCode(currencyCode)
+                .effectiveDate(effectiveDate);
+    }
 }

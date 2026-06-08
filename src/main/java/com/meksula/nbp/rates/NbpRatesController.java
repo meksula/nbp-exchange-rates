@@ -1,6 +1,5 @@
 package com.meksula.nbp.rates;
 
-import com.meksula.nbp.domain.ExchangeRate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,7 @@ class NbpRatesController {
 
     @GetMapping("/{currencyCode}")
     ResponseEntity<RateSummaryResponse> fetchCurrencyRates(@PathVariable String currencyCode, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate effectiveDate) {
-        ExchangeRate entity = nbpRatesService.fetchCurrencyRates(currencyCode.toUpperCase(), effectiveDate);
-        return ResponseEntity.ok(RateSummaryResponse.from(entity));
+        RateSummaryResponse rateSummaryResponse = nbpRatesService.fetchCurrencyRates(currencyCode.toUpperCase(), effectiveDate);
+        return ResponseEntity.ok(rateSummaryResponse);
     }
 }

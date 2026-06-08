@@ -1,6 +1,6 @@
 package com.meksula.nbp.rates;
 
-import com.meksula.nbp.domain.ExchangeRate;
+import com.meksula.nbp.domain.ExchangeRateEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,9 +10,9 @@ import java.util.Optional;
 import java.util.Set;
 
 @Repository
-interface ExchangeRateRepository extends JpaRepository<ExchangeRate, Long> {
+interface ExchangeRateRepository extends JpaRepository<ExchangeRateEntity, Long> {
 
-    Optional<ExchangeRate> findByCurrencyCodeAndEffectiveDate(String currencyCode, LocalDate effectiveDate);
+    Optional<ExchangeRateEntity> findByCurrencyCodeAndEffectiveDate(String currencyCode, LocalDate effectiveDate);
 
-    List<ExchangeRate> findByCurrencyCodeInAndEffectiveDate(Set<String> currencyCodes, LocalDate effectiveDate);
+    List<ExchangeRateEntity> findByCurrencyCodeInAndEffectiveDate(Set<String> currencyCodes, LocalDate effectiveDate);
 }
