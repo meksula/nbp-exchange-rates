@@ -13,7 +13,8 @@ URL: http://localhost:8080/api/v1/rates/EUR?effectiveDate=2026-06-08<br>
 Metoda HTTP: GET<br>
 
 3. Zaktualizuj waluty, które są nie wpełni kompletne (out-to-date - ten przypadek opisany w specyfikacji ominąłem, ponieważ API NBP jest niemutowalne i zawsze zwróci dane aktualne,
-które się nie zmienią). Metoda jest idempotentna, za każdym requestem dostaniemy ten sam wynik.<br>
+które się nie zmienią). Metoda jest idempotentna, za każdym requestem dostaniemy ten sam wynik.
+Korzystam tutaj z innego endpointu udostępnionego przez NPB - table zamiast single request, żeby batchowo pobrać sobie wszystko za pomocą 2 requestów, a nie n currencies. <br>
 URL: http://localhost:8080/api/v1/rates<br>
 Metoda HTTP: PUT<br>
 Request body:<br>
