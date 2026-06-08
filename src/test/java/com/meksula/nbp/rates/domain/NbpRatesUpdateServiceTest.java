@@ -1,12 +1,5 @@
-package com.meksula.nbp.domain.rates.update;
+package com.meksula.nbp.rates.domain;
 
-import com.meksula.nbp.rates.domain.ExchangeRateEntity;
-import com.meksula.nbp.rates.domain.NbpRateEntry;
-import com.meksula.nbp.rates.domain.NbpRatesClientFacade;
-import com.meksula.nbp.rates.domain.NbpRatesResponse;
-import com.meksula.nbp.rates.domain.NbpRatesUpdateService;
-import com.meksula.nbp.rates.domain.RatesDataMalformedException;
-import com.meksula.nbp.rates.domain.RatesNotFoundException;
 import com.meksula.nbp.rates.api.RateUpdateResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -41,7 +34,7 @@ class NbpRatesUpdateServiceTest {
     private NbpRatesClientFacade nbpRatesClientFacade;
 
     @Mock
-    private ExchangeRateUpdateRepository exchangeRateUpdateRepository;
+    private ExchangeRateRepository exchangeRateUpdateRepository;
 
     @InjectMocks
     private NbpRatesUpdateService service;

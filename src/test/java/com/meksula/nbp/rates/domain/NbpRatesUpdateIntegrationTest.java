@@ -1,6 +1,5 @@
-package com.meksula.nbp.domain.rates.update;
+package com.meksula.nbp.rates.domain;
 
-import com.meksula.nbp.rates.domain.ExchangeRateEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,7 +41,7 @@ class NbpRatesUpdateIntegrationTest {
     private RestTemplate restTemplate;
 
     @Autowired
-    private ExchangeRateUpdateRepository exchangeRateUpdateRepository;
+    private ExchangeRateRepository exchangeRateUpdateRepository;
 
     private MockRestServiceServer mockNbpServer;
 

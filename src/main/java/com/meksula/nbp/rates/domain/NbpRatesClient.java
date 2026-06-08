@@ -31,7 +31,7 @@ class NbpRatesClient {
 
     @Retry(name = "nbp-api-retry")
     public Optional<NbpRatesResponse> fetchCurrencyRate(TableType table, String currencyCode, LocalDate effectiveDate) {
-        final URI uri = prepareUri(table, currencyCode, effectiveDate);
+        final URI uri = prepareSingleRateUri(table, currencyCode, effectiveDate);
         try {
             ResponseEntity<NbpRatesResponse> response = restTemplate.getForEntity(uri, NbpRatesResponse.class);
             log.info("NBP API response code: {}, for URI: {}", response.getStatusCode(), uri);
@@ -64,7 +64,7 @@ class NbpRatesClient {
         }
     }
 
-    private URI prepareUri(TableType table, String currencyCode, LocalDate date) {
+    private URI prepareSingleRateUri(TableType table, String currencyCode, LocalDate date) {
         return UriComponentsBuilder.fromHttpUrl(rootUrl)
                                    .pathSegment("exchangerates", "rates", table.name(), currencyCode, date.format(DateTimeFormatter.ISO_LOCAL_DATE))
                                    .build()
