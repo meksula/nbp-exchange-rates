@@ -30,3 +30,5 @@ spring:
 
 nbp-api:
   root-url: https://api.nbp.pl/api
+  connect-timeout: 5s
+  read-timeout: 10s
