@@ -34,12 +34,12 @@ public class NbpRatesService {
 
     private ExchangeRateEntity fetchMissingRates(ExchangeRateEntity entity) {
         if (entity.hasNoMid()) {
-            Optional<NbpRatesResponse> nbpRatesResponse = nbpRatesClient.fetchFromTable(TableType.A, entity.getCurrencyCode(), entity.getEffectiveDate());
+            Optional<NbpRatesResponse> nbpRatesResponse = nbpRatesClient.fetchCurrencyRate(TableType.A, entity.getCurrencyCode(), entity.getEffectiveDate());
             nbpRatesResponse.ifPresent(response -> entity.withMid(firstItemOrThrow(response.getRates())
                                                                           .getMid()));
         }
         if (entity.hasNoBidAndAsk()) {
-            Optional<NbpRatesResponse> nbpRatesResponse = nbpRatesClient.fetchFromTable(TableType.C, entity.getCurrencyCode(), entity.getEffectiveDate());
+            Optional<NbpRatesResponse> nbpRatesResponse = nbpRatesClient.fetchCurrencyRate(TableType.C, entity.getCurrencyCode(), entity.getEffectiveDate());
             nbpRatesResponse.ifPresent(response -> {
                 NbpRateEntry entry = firstItemOrThrow(response.getRates());
                 entity.withBidAndAsk(entry.getBid(), entry.getAsk());
@@ -49,8 +49,12 @@ public class NbpRatesService {
     }
 
     private ExchangeRateEntity fetchMissingExchangeRate(String currencyCode, LocalDate effectiveDate) {
-        Optional<NbpRatesResponse> aTableResponse = nbpRatesClient.fetchFromTable(TableType.A, currencyCode, effectiveDate);
-        Optional<NbpRatesResponse> cTableResponse = nbpRatesClient.fetchFromTable(TableType.C, currencyCode, effectiveDate);
+        Optional<NbpRatesResponse> aTableResponse = nbpRatesClient.fetchCurrencyRate(TableType.A, currencyCode, effectiveDate);
+        Optional<NbpRatesResponse> cTableResponse = nbpRatesClient.fetchCurrencyRate(TableType.C, currencyCode, effectiveDate);
+
+        if (aTableResponse.isEmpty() && cTableResponse.isEmpty()) {
+            throw new RatesNotFoundException(currencyCode, effectiveDate);
+        }
 
         ExchangeRateEntity.ExchangeRateEntityBuilder exchangeRateEntityBuilder = ExchangeRateEntity.builder(currencyCode, effectiveDate);
 
@@ -63,15 +67,14 @@ public class NbpRatesService {
                                      .currencyCode(aResponse.getCode())
                                      .effectiveDate(aNbpRateEntry.getEffectiveDate())
                                      .mid(aNbpRateEntry.getMid());
-
-            cTableResponse.ifPresent(cResponse -> {
-                NbpRateEntry cNbpRateEntry = firstItemOrThrow(cResponse.getRates());
-                if (isNull(cNbpRateEntry)) {
-                    throw new RatesNotFoundException(currencyCode, effectiveDate);
-                }
-                exchangeRateEntityBuilder.bid(cNbpRateEntry.getBid())
-                                         .ask(cNbpRateEntry.getAsk());
-            });
+        });
+        cTableResponse.ifPresent(cResponse -> {
+            NbpRateEntry cNbpRateEntry = firstItemOrThrow(cResponse.getRates());
+            if (isNull(cNbpRateEntry)) {
+                throw new RatesNotFoundException(currencyCode, effectiveDate);
+            }
+            exchangeRateEntityBuilder.bid(cNbpRateEntry.getBid())
+                                     .ask(cNbpRateEntry.getAsk());
         });
         ExchangeRateEntity exchangeRateEntity = exchangeRateEntityBuilder.build();
         return exchangeRateRepository.save(exchangeRateEntity);

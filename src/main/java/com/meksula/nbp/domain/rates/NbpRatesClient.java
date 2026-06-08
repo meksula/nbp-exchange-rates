@@ -1,7 +1,9 @@
 package com.meksula.nbp.domain.rates;
 
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -24,15 +26,18 @@ class NbpRatesClient {
         this.rootUrl = rootUrl;
     }
 
-    Optional<NbpRatesResponse> fetchFromTable(TableType table, String currencyCode, LocalDate effectiveDate) {
-        URI uri = prepareUri(table, currencyCode, effectiveDate);
+    @Retry(name = "nbp-api-retry")
+    public Optional<NbpRatesResponse> fetchCurrencyRate(TableType table, String currencyCode, LocalDate effectiveDate) {
+        final URI uri = prepareUri(table, currencyCode, effectiveDate);
         try {
-            return Optional.ofNullable(restTemplate.getForObject(uri, NbpRatesResponse.class));
-        } catch (HttpClientErrorException e) {
-            log.debug("HTTP error {} occurred for table: {}, currencyCode: {}, date: {}", e.getStatusText(), table, currencyCode, effectiveDate);
+            ResponseEntity<NbpRatesResponse> response = restTemplate.getForEntity(uri, NbpRatesResponse.class);
+            log.info("NBP API response code: {}, for URI: {}", response.getStatusCode(), uri);
+            return Optional.ofNullable(response.getBody());
+        } catch (HttpClientErrorException.NotFound notFound) {
+            log.info("NBP API resource not found for URI: {}", uri);
             return Optional.empty();
-        } catch (Exception e) {
-            log.error("Unknown error occurred: {}", e);
+        } catch (HttpClientErrorException clientError) {
+            log.warn("NBP client error with response code: {} for URI: {} — not retrying", clientError.getStatusCode(), uri);
             return Optional.empty();
         }
     }

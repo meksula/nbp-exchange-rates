@@ -32,3 +32,19 @@ nbp-api:
   root-url: https://api.nbp.pl/api
   connect-timeout: 5s
   read-timeout: 10s
+
+resilience4j:
+  retry:
+    instances:
+      nbp-api-retry:
+        max-attempts: 3
+        wait-duration: 500ms
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+        retry-exceptions:
+          - org.springframework.web.client.HttpServerErrorException
+          - org.springframework.web.client.ResourceAccessException
+
+logging:
+  level:
+    io.github.resilience4j: DEBUG
