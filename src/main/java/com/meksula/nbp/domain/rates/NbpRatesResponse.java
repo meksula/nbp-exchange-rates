@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-class NbpRatesResponse {
+public class NbpRatesResponse {
 
     private String table;
     private String currency;

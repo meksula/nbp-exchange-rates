@@ -4,20 +4,29 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-class NbpRatesClientFacade {
+public class NbpRatesClientFacade {
 
     private final NbpRatesClient nbpRatesClient;
 
-    Optional<NbpRatesResponse> fetchMidCurrencyRate(String currencyCode, LocalDate effectiveDate) {
+    public Optional<NbpRatesResponse> fetchMidCurrencyRate(String currencyCode, LocalDate effectiveDate) {
         return nbpRatesClient.fetchCurrencyRate(TableType.A, currencyCode, effectiveDate);
     }
 
-    Optional<NbpRatesResponse> fetchBidAndAskCurrencyRate(String currencyCode, LocalDate effectiveDate) {
+    public Optional<NbpRatesResponse> fetchBidAndAskCurrencyRate(String currencyCode, LocalDate effectiveDate) {
         return nbpRatesClient.fetchCurrencyRate(TableType.C, currencyCode, effectiveDate);
+    }
+
+    public List<NbpRatesResponse> fetchMidTableCurrencyRate(LocalDate effectiveDate) {
+        return nbpRatesClient.fetchTableCurrencyRate(TableType.A, effectiveDate);
+    }
+
+    public List<NbpRatesResponse> fetchBidAndAskTableCurrencyRate(LocalDate effectiveDate) {
+        return nbpRatesClient.fetchTableCurrencyRate(TableType.C, effectiveDate);
     }
 
 }

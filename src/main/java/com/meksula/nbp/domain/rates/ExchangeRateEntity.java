@@ -65,6 +65,10 @@ public class ExchangeRateEntity {
         return mid != null && bid != null && ask != null;
     }
 
+    public boolean isNotComplete() {
+        return !isComplete();
+    }
+
     public boolean hasNoMid() {
         return isNull(mid);
     }
