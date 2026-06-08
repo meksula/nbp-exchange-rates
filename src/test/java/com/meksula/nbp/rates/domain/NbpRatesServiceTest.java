@@ -215,24 +215,24 @@ class NbpRatesServiceTest {
     }
 
     private ExchangeRateEntity completeEntity(String code, String mid, String bid, String ask) {
-        ExchangeRateEntity entity = ExchangeRateEntity.builder(code, DATE).build();
-        entity.setMid(new BigDecimal(mid));
-        entity.setBid(new BigDecimal(bid));
-        entity.setAsk(new BigDecimal(ask));
-        return entity;
+        return ExchangeRateEntity.builder(code, DATE)
+                                 .mid(new BigDecimal(mid))
+                                 .bid(new BigDecimal(bid))
+                                 .ask(new BigDecimal(ask))
+                                 .build();
     }
 
     private ExchangeRateEntity entityWithMid(String code, String mid) {
-        ExchangeRateEntity entity = ExchangeRateEntity.builder(code, DATE).build();
-        entity.setMid(new BigDecimal(mid));
-        return entity;
+        return ExchangeRateEntity.builder(code, DATE)
+                                 .mid(new BigDecimal(mid))
+                                 .build();
     }
 
     private ExchangeRateEntity entityWithBidAsk(String code, String bid, String ask) {
-        ExchangeRateEntity entity = ExchangeRateEntity.builder(code, DATE).build();
-        entity.setBid(new BigDecimal(bid));
-        entity.setAsk(new BigDecimal(ask));
-        return entity;
+        return ExchangeRateEntity.builder(code, DATE)
+                                 .bid(new BigDecimal(bid))
+                                 .ask(new BigDecimal(ask))
+                                 .build();
     }
 
     private NbpRatesResponse perCurrencyResponse(NbpRateEntry... entries) {

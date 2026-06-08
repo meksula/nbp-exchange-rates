@@ -1,12 +1,10 @@
 package com.meksula.nbp.rates.domain;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -27,7 +25,6 @@ import static java.util.Objects.*;
 @Entity
 @Table(name = "exchange_rate", uniqueConstraints = @UniqueConstraint(name = "uk_exchange_rate_currency_date", columnNames = {"currency_code", "effective_date"}))
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -47,11 +44,9 @@ public class ExchangeRateEntity {
     @Column(name = "updated_date", nullable = false)
     private LocalDateTime updatedDate;
 
-    @Setter(AccessLevel.NONE)
     @Column(name = "currency_code", length = 3, nullable = false)
     private String currencyCode;
 
-    @Setter(AccessLevel.NONE)
     @Column(name = "effective_date", nullable = false)
     private LocalDate effectiveDate;
 
@@ -92,6 +87,12 @@ public class ExchangeRateEntity {
     }
 
     public static ExchangeRateEntity.ExchangeRateEntityBuilder builder(String currencyCode, LocalDate effectiveDate) {
+        if (isNull(currencyCode) || currencyCode.isBlank() || currencyCode.length() != 3) {
+            throw new IllegalArgumentException("currencyCode must be a 3-letter ISO 4217 code");
+        }
+        if (isNull(effectiveDate)) {
+            throw new IllegalArgumentException("effectiveDate must not be null");
+        }
         LocalDateTime now = LocalDateTime.now();
         return new ExchangeRateEntityBuilder()
                 .createdDate(now)

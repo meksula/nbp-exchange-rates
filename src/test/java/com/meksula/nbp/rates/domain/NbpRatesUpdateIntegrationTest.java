@@ -55,13 +55,15 @@ class NbpRatesUpdateIntegrationTest {
     @DisplayName("End-to-end test: PUT /api/v1/rates with mixed batch returns correct buckets and persists updates")
     void shouldHandleMixedBatchEndToEnd() throws Exception {
         // given
-        ExchangeRateEntity usdComplete = ExchangeRateEntity.builder("USD", DATE).build();
-        usdComplete.setMid(new BigDecimal("3.69"));
-        usdComplete.setBid(new BigDecimal("3.62"));
-        usdComplete.setAsk(new BigDecimal("3.70"));
+        ExchangeRateEntity usdComplete = ExchangeRateEntity.builder("USD", DATE)
+                                                            .mid(new BigDecimal("3.69"))
+                                                            .bid(new BigDecimal("3.62"))
+                                                            .ask(new BigDecimal("3.70"))
+                                                            .build();
 
-        ExchangeRateEntity eurIncomplete = ExchangeRateEntity.builder("EUR", DATE).build();
-        eurIncomplete.setMid(new BigDecimal("4.24"));
+        ExchangeRateEntity eurIncomplete = ExchangeRateEntity.builder("EUR", DATE)
+                                                              .mid(new BigDecimal("4.24"))
+                                                              .build();
 
         exchangeRateUpdateRepository.saveAll(List.of(usdComplete, eurIncomplete));
 
@@ -108,10 +110,11 @@ class NbpRatesUpdateIntegrationTest {
     @DisplayName("End-to-end: when all currencies are complete in DB, no NBP call is made")
     void shouldSkipNbpWhenAllAreUpToDate() throws Exception {
         // given
-        ExchangeRateEntity usdComplete = ExchangeRateEntity.builder("USD", DATE).build();
-        usdComplete.setMid(new BigDecimal("3.69"));
-        usdComplete.setBid(new BigDecimal("3.62"));
-        usdComplete.setAsk(new BigDecimal("3.70"));
+        ExchangeRateEntity usdComplete = ExchangeRateEntity.builder("USD", DATE)
+                                                            .mid(new BigDecimal("3.69"))
+                                                            .bid(new BigDecimal("3.62"))
+                                                            .ask(new BigDecimal("3.70"))
+                                                            .build();
         exchangeRateUpdateRepository.save(usdComplete);
 
         // when / then
