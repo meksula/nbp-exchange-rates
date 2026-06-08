@@ -1,6 +1,5 @@
-package com.meksula.nbp.rates;
+package com.meksula.nbp.domain.rates;
 
-import com.meksula.nbp.domain.ExchangeRateEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

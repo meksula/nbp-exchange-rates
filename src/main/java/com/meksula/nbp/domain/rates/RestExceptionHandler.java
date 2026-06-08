@@ -1,4 +1,4 @@
-package com.meksula.nbp.rates;
+package com.meksula.nbp.domain.rates;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.meksula.nbp.rates;
+package com.meksula.nbp.domain.rates;
 
 import java.time.LocalDate;
 

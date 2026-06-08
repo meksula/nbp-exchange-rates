@@ -1,4 +1,4 @@
-package com.meksula.nbp.domain;
+package com.meksula.nbp.domain.rates;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,7 +32,7 @@ import static java.util.Objects.*;
 @Builder
 @EqualsAndHashCode(of = {"currencyCode", "effectiveDate"})
 @ToString
-public class ExchangeRateEntity {
+class ExchangeRateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

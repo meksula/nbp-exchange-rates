@@ -1,4 +1,4 @@
-package com.meksula.nbp.rates;
+package com.meksula.nbp.domain.rates;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;

@@ -1,7 +1,6 @@
-package com.meksula.nbp.rates;
+package com.meksula.nbp.domain.rates;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.meksula.nbp.domain.ExchangeRateEntity;
 import lombok.Builder;
 import lombok.Getter;
 

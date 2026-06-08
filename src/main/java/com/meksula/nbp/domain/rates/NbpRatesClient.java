@@ -1,4 +1,4 @@
-package com.meksula.nbp.rates;
+package com.meksula.nbp.domain.rates;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
