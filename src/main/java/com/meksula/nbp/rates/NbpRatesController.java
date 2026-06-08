@@ -20,9 +20,7 @@ class NbpRatesController {
     private final NbpRatesService nbpRatesService;
 
     @GetMapping("/{currencyCode}")
-    ResponseEntity<RateSummaryResponse> fetchCurrencyRates(
-            @PathVariable String currencyCode,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate effectiveDate) {
+    ResponseEntity<RateSummaryResponse> fetchCurrencyRates(@PathVariable String currencyCode, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate effectiveDate) {
         ExchangeRate entity = nbpRatesService.fetchCurrencyRates(currencyCode.toUpperCase(), effectiveDate);
         return ResponseEntity.ok(RateSummaryResponse.from(entity));
     }

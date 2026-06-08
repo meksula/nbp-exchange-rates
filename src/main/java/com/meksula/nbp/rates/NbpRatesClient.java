@@ -24,18 +24,23 @@ class NbpRatesClient {
         this.rootUrl = rootUrl;
     }
 
-    Optional<NbpRatesResponse> fetchFromTable(TableType table, String currencyCode, LocalDate date) {
-        URI uri = UriComponentsBuilder.fromHttpUrl(rootUrl)
-                .pathSegment("exchangerates", "rates", table.name(), currencyCode, date.format(DateTimeFormatter.ISO_LOCAL_DATE))
-                .queryParam("format", "json")
-                .build()
-                .toUri();
-
+    Optional<NbpRatesResponse> fetchFromTable(TableType table, String currencyCode, LocalDate effectiveDate) {
+        URI uri = prepareUri(table, currencyCode, effectiveDate);
         try {
             return Optional.ofNullable(restTemplate.getForObject(uri, NbpRatesResponse.class));
-        } catch (HttpClientErrorException.NotFound e) {
-            log.debug("NBP 404 for table={}, code={}, date={}", table, currencyCode, date);
+        } catch (HttpClientErrorException e) {
+            log.debug("HTTP error {} occurred for table: {}, currencyCode: {}, date: {}", e.getStatusText(), table, currencyCode, effectiveDate);
+            return Optional.empty();
+        } catch (Exception e) {
+            log.error("Unknown error occurred: {}", e);
             return Optional.empty();
         }
+    }
+
+    private URI prepareUri(TableType table, String currencyCode, LocalDate date) {
+        return UriComponentsBuilder.fromHttpUrl(rootUrl)
+                                   .pathSegment("exchangerates", "rates", table.name(), currencyCode, date.format(DateTimeFormatter.ISO_LOCAL_DATE))
+                                   .build()
+                                   .toUri();
     }
 }

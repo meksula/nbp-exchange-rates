@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +18,7 @@ class NbpRatesService {
     @Transactional
     ExchangeRate fetchCurrencyRates(String currencyCode, LocalDate effectiveDate) {
 
-        nbpRatesClient.fetchFromTable(TableType.A, currencyCode, effectiveDate);
+        Optional<NbpRatesResponse> nbpRatesResponse = nbpRatesClient.fetchFromTable(TableType.A, currencyCode, effectiveDate);
 
         throw new UnsupportedOperationException("UC1 — do napisania (task #2)");
     }
