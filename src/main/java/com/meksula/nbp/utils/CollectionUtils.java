@@ -2,7 +2,7 @@ package com.meksula.nbp.utils;
 
 public class CollectionUtils {
 
-    public static <T> T firstItemOrThrow(Iterable<T> iterable) {
+    public static <T> T firstItemOrThrow(Iterable<T> iterable) throws IllegalArgumentException {
         if (iterable == null) {
             throw new IllegalArgumentException("Collection is null");
         }

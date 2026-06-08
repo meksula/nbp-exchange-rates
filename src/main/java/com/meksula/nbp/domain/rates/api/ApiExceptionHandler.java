@@ -1,5 +1,6 @@
 package com.meksula.nbp.domain.rates.api;
 
+import com.meksula.nbp.domain.rates.RatesDataMalformedException;
 import com.meksula.nbp.domain.rates.RatesNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,11 @@ class ApiExceptionHandler {
     @ExceptionHandler(RatesNotFoundException.class)
     ResponseEntity<ApiErrorResponse> handleNotFound(RatesNotFoundException ex) {
         return errorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    @ExceptionHandler(RatesDataMalformedException.class)
+    ResponseEntity<ApiErrorResponse> handleMalformedData(RatesDataMalformedException ex) {
+        return errorResponse(HttpStatus.UNPROCESSABLE_ENTITY, ex.getMessage());
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class, ConstraintViolationException.class})
