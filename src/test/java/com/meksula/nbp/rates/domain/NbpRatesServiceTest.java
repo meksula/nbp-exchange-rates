@@ -40,7 +40,6 @@ class NbpRatesServiceTest {
 
     @BeforeEach
     void setUp() {
-        // save returns the input — lenient because cache-hit path skips save
         lenient().when(exchangeRateRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
     }
 
@@ -128,7 +127,7 @@ class NbpRatesServiceTest {
         // when
         RateSummaryResponse response = service.fetchCurrencyRates(USD, DATE);
 
-        // then — assert what got saved
+        // then
         ArgumentCaptor<ExchangeRateEntity> captor = ArgumentCaptor.forClass(ExchangeRateEntity.class);
         verify(exchangeRateRepository).save(captor.capture());
         ExchangeRateEntity saved = captor.getValue();
@@ -144,7 +143,7 @@ class NbpRatesServiceTest {
     @Test
     @DisplayName("Should create partial entity (mid only) when currency is only available in mid table")
     void shouldCreatePartialEntityWhenOnlyMidAvailable() {
-        // given — e.g. exotic currency present in A but not in C
+        // given
         when(exchangeRateRepository.findByCurrencyCodeAndEffectiveDate(USD, DATE))
                 .thenReturn(Optional.empty());
 
@@ -186,7 +185,7 @@ class NbpRatesServiceTest {
     @Test
     @DisplayName("Should throw RatesNotFoundException when entity does not exist and both NBP tables return empty")
     void shouldThrowWhenNotInDbAndNbpReturnsNothing() {
-        // given — weekend or unknown currency
+        // given
         when(exchangeRateRepository.findByCurrencyCodeAndEffectiveDate(USD, DATE))
                 .thenReturn(Optional.empty());
         when(nbpRatesClientFacade.fetchMidCurrencyRate(USD, DATE))
@@ -208,14 +207,12 @@ class NbpRatesServiceTest {
         when(exchangeRateRepository.findByCurrencyCodeAndEffectiveDate(USD, DATE))
                 .thenReturn(Optional.empty());
         when(nbpRatesClientFacade.fetchMidCurrencyRate(USD, DATE))
-                .thenReturn(Optional.of(perCurrencyResponse())); // empty rates[]
+                .thenReturn(Optional.of(perCurrencyResponse()));
 
         // when / then
         assertThatThrownBy(() -> service.fetchCurrencyRates(USD, DATE))
                 .isInstanceOf(RatesDataMalformedException.class);
     }
-
-    // ===== Helpers =====
 
     private ExchangeRateEntity completeEntity(String code, String mid, String bid, String ask) {
         ExchangeRateEntity entity = ExchangeRateEntity.builder(code, DATE).build();
@@ -246,9 +243,15 @@ class NbpRatesServiceTest {
 
     private NbpRateEntry rateEntry(String mid, String bid, String ask) {
         NbpRateEntry entry = new NbpRateEntry();
-        if (mid != null) entry.setMid(new BigDecimal(mid));
-        if (bid != null) entry.setBid(new BigDecimal(bid));
-        if (ask != null) entry.setAsk(new BigDecimal(ask));
+        if (mid != null) {
+            entry.setMid(new BigDecimal(mid));
+        }
+        if (bid != null) {
+            entry.setBid(new BigDecimal(bid));
+        }
+        if (ask != null) {
+            entry.setAsk(new BigDecimal(ask));
+        }
         return entry;
     }
 }
