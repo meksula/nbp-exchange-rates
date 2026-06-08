@@ -18,8 +18,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "exchange_rate", uniqueConstraints = @UniqueConstraint(name = "uk_exchange_rate_currency_date", columnNames = {"currency_code", "effective_date"}))
@@ -36,6 +36,14 @@ public class ExchangeRate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @CreationTimestamp
+    @Column(name = "created_date", updatable = false, nullable = false)
+    private LocalDateTime createdDate;
+
+    @UpdateTimestamp
+    @Column(name = "updated_date", nullable = false)
+    private LocalDateTime updatedDate;
+
     @Column(name = "currency_code", length = 3, nullable = false)
     private String currencyCode;
 
@@ -50,20 +58,4 @@ public class ExchangeRate {
 
     @Column(name = "ask_rate", precision = 19, scale = 6)
     private BigDecimal ask;
-
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false, nullable = false)
-    private Instant createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
-    private Instant updatedAt;
-
-    public boolean hasMid() {
-        return mid != null;
-    }
-
-    public boolean hasBidAsk() {
-        return bid != null && ask != null;
-    }
 }

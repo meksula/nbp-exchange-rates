@@ -5,16 +5,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-class NbpRatesResponse {
+class NbpRateEntry {
 
-    private String table;
-    private String currency;
-    private String code;
-    private List<NbpRateEntry> rates;
+    private String no;
+    private LocalDate effectiveDate;
+    private BigDecimal mid;
+    private BigDecimal bid;
+    private BigDecimal ask;
 }

@@ -17,10 +17,14 @@ spring:
         format_sql: true
     show-sql: true
 
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: false
+
   h2:
     console:
       enabled: true
       path: /h2-console
 
 nbp-api:
-  base-url: https://api.nbp.pl/api
+  root-url: https://api.nbp.pl/api

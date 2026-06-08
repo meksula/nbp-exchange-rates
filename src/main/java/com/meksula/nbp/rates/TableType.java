@@ -1,5 +1,5 @@
 package com.meksula.nbp.rates;
 
-public class NbpCurrencyRates {
-
+enum TableType {
+    A, B, C
 }

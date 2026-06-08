@@ -1,7 +1,9 @@
 package com.meksula.nbp.rates;
 
+import com.meksula.nbp.domain.ExchangeRate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
@@ -9,9 +11,14 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 class NbpRatesService {
 
-    private final NbpWebClient nbpWebClient;
+    private final NbpRatesClient nbpRatesClient;
+    private final ExchangeRateRepository exchangeRateRepository;
 
-    NbpCurrencyRates fetchCurrencyRates(String currencyCode, LocalDate effectiveDate) {
-        return null;
+    @Transactional
+    ExchangeRate fetchCurrencyRates(String currencyCode, LocalDate effectiveDate) {
+
+        nbpRatesClient.fetchFromTable(TableType.A, currencyCode, effectiveDate);
+
+        throw new UnsupportedOperationException("UC1 — do napisania (task #2)");
     }
 }
