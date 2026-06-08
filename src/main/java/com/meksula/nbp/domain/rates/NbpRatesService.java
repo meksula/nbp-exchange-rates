@@ -1,5 +1,6 @@
 package com.meksula.nbp.domain.rates;
 
+import com.meksula.nbp.domain.rates.api.RateSummaryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

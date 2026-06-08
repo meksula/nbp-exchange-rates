@@ -32,7 +32,7 @@ import static java.util.Objects.*;
 @Builder
 @EqualsAndHashCode(of = {"currencyCode", "effectiveDate"})
 @ToString
-class ExchangeRateEntity {
+public class ExchangeRateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
