@@ -1,7 +1,7 @@
-package com.meksula.nbp.domain.rates.api;
+package com.meksula.nbp.rates.api;
 
-import com.meksula.nbp.domain.rates.NbpRatesService;
-import com.meksula.nbp.domain.rates.update.NbpRatesUpdateService;
+import com.meksula.nbp.rates.domain.NbpRatesService;
+import com.meksula.nbp.rates.domain.NbpRatesUpdateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;

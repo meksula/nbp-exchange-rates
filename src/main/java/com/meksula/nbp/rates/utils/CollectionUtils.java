@@ -1,4 +1,4 @@
-package com.meksula.nbp.utils;
+package com.meksula.nbp.rates.utils;
 
 public class CollectionUtils {
 

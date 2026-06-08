@@ -1,4 +1,4 @@
-package com.meksula.nbp.domain.rates;
+package com.meksula.nbp.rates.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
@@ -12,9 +12,11 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-class NbpRateEntry {
+public class NbpRateEntry {
 
     private String no;
+    private String code;
+    private String currency;
     private LocalDate effectiveDate;
     private BigDecimal mid;
     private BigDecimal bid;

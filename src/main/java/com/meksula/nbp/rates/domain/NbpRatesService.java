@@ -1,6 +1,6 @@
-package com.meksula.nbp.domain.rates;
+package com.meksula.nbp.rates.domain;
 
-import com.meksula.nbp.domain.rates.api.RateSummaryResponse;
+import com.meksula.nbp.rates.api.RateSummaryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import static com.meksula.nbp.utils.CollectionUtils.firstItemOrThrow;
+import static com.meksula.nbp.rates.utils.CollectionUtils.firstItemOrThrow;
 
 @Service
 @RequiredArgsConstructor

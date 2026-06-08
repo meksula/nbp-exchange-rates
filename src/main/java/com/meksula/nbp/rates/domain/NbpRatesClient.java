@@ -1,4 +1,4 @@
-package com.meksula.nbp.domain.rates;
+package com.meksula.nbp.rates.domain;
 
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.slf4j.Slf4j;

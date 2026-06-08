@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:nbp-test;DB_CLOSE_DELAY=-1
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+resilience4j:
+  retry:
+    instances:
+      nbp-api-retry:
+        max-attempts: 1
+      nbp-api-table-retry:
+        max-attempts: 1

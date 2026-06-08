@@ -1,4 +1,4 @@
-package com.meksula.nbp.domain.rates;
+package com.meksula.nbp.rates.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

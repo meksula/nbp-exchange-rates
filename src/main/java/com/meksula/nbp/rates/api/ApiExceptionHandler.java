@@ -1,7 +1,7 @@
-package com.meksula.nbp.domain.rates.api;
+package com.meksula.nbp.rates.api;
 
-import com.meksula.nbp.domain.rates.RatesDataMalformedException;
-import com.meksula.nbp.domain.rates.RatesNotFoundException;
+import com.meksula.nbp.rates.domain.RatesDataMalformedException;
+import com.meksula.nbp.rates.domain.RatesNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

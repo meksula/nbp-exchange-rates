@@ -1,4 +1,4 @@
-package com.meksula.nbp.domain.rates.api;
+package com.meksula.nbp.rates.api;
 
 import java.time.LocalDateTime;
 
